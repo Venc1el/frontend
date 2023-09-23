@@ -9,7 +9,7 @@ function UserUmkm() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8081/public/posts')
+        axios.get('https://delightful-tan-scallop.cyclic.cloud/public/posts')
             .then((response) => {
                 setUmkmPosts(response.data);
                 setLoading(false);
@@ -43,7 +43,7 @@ function UserUmkm() {
                 {filteredUmkmPosts.map((post) => (
                     <div key={post.id} className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                         <a href="#">
-                            <img className="object-cover w-full h-60 rounded-t-lg" src={`http://localhost:8081/uploads/${post.image}`} alt="" />
+                            <img className="object-cover w-full h-60 rounded-t-lg" src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${post.image}`} alt="" />
                         </a>
                         <div className="p-5">
                             {post.kategori.split(' ').map((kategori, index) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from './cards';
 
-const baseURL = 'http://localhost:8081';
+const baseURL = 'https://delightful-tan-scallop.cyclic.cloud';
 
 function Tabs() {
     const [activeTab, setActiveTab] = useState('profile'); // 'profile' is the default active tab

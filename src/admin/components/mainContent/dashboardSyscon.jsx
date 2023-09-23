@@ -11,7 +11,7 @@ function DashboardSyscon() {
     useEffect(() => {
         // Fetch total report data for a specific user (replace userId with the desired user's ID)
         const userId = fetchUserInfo(); // Replace with the user's ID you want to fetch data for
-        axios.get(`http://localhost:8081/reportData/${userId}`)
+        axios.get(`https://delightful-tan-scallop.cyclic.cloud/reportData/${userId}`)
             .then((response) => {
                 const data = response.data;
                 setTotalReports(data.totalReports);
@@ -22,7 +22,7 @@ function DashboardSyscon() {
             });
 
         // Fetch total UMKM data
-        axios.get('http://localhost:8081/umkm/posts')
+        axios.get('https://delightful-tan-scallop.cyclic.cloud/umkm/posts')
             .then((response) => {
                 const umkmData = response.data;
                 const totalUMKMsCount = umkmData.length;

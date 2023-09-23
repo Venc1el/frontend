@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8081';
+const baseUrl = 'https://delightful-tan-scallop.cyclic.cloud';
 
 function UpdateUmkmPost() {
   const { id } = useParams();

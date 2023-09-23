@@ -41,7 +41,7 @@ function ComplaintResponse() {
             setUploading(true);
 
             await axios.post(
-                `http://localhost:8081/complaints/${id}/responses`,
+                `https://delightful-tan-scallop.cyclic.cloud/complaints/${id}/responses`,
                 formData,
                 {
                     headers: {

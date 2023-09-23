@@ -8,7 +8,7 @@ function AllMapData() {
 
     useEffect(() => {
         // Make a GET request to fetch all coordinates from your backend
-        axios.get('http://localhost:8081/maps/all')
+        axios.get('https://delightful-tan-scallop.cyclic.cloud/maps/all')
             .then((response) => {
                 const { coordinates } = response.data; // Access the 'coordinates' property
                 setCoordinates(coordinates)

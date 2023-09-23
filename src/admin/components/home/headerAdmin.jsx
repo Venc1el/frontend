@@ -13,7 +13,7 @@ function HeaderAdmin() {
   const handleLogout = () => {
     const shouldLogout = window.confirm("Are you sure you want to log out?");
     if (shouldLogout) {
-      axios.get('http://localhost:8081/logout')
+      axios.get('https://delightful-tan-scallop.cyclic.cloud/logout')
         .then(res => {
           if (res.data.status === "Success") {
             localStorage.removeItem('encryptedUserLevel')

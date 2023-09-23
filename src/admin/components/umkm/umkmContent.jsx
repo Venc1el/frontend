@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import UseAuth from '../../../server/useAuth';
 import { Pagination } from '../../../pagination/pagination';
 
-const baseURL = 'http://localhost:8081'
+const baseURL = 'https://delightful-tan-scallop.cyclic.cloud'
 
 function UmkmContent() {
     const [posts, setPosts] = useState([]);
@@ -127,7 +127,7 @@ function UmkmContent() {
                                         {post.image && (
                                             <td className="px-6 py-4">
                                                 <img
-                                                    src={`http://localhost:8081/uploads/${post.image}`}
+                                                    src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${post.image}`}
                                                     alt=""
                                                     className="img-fluid rounded-lg"
                                                     style={{ maxWidth: '50vw', height: '12vh' }}

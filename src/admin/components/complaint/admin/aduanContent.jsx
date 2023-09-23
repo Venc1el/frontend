@@ -11,7 +11,11 @@ function AduanContent() {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:8081/complaints')
+<<<<<<< HEAD
+			.get('https://delightful-tan-scallop.cyclic.cloud/complaints')
+=======
+			.get('https://web-jambangan-api.vercel.app/complaints')
+>>>>>>> d59281190262e0a05a9088c5060afd9ad63e8d6f
 			.then((response) => {
 				setComplaints(response.data);
 				setComplaintExists(response.data.length > 0);

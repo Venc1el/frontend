@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const baseURL = 'http://localhost:8081';
+const baseURL = 'https://delightful-tan-scallop.cyclic.cloud';
 
 function UmkmDetails() {
     const { id } = useParams();
@@ -102,7 +102,7 @@ function UmkmDetails() {
             {/* Umkm Details */}
             {umkm.image && (
                 <img
-                    src={`http://localhost:8081/uploads/${umkm.image}`}
+                    src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${umkm.image}`}
                     alt="Response Image"
                     className='w-1/3'
                 />

@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post("http://localhost:8081/login", values, {withCredentials : true})
+            .post("https://delightful-tan-scallop.cyclic.cloud/login", values, {withCredentials : true})
             .then((res) => {
                 if (res.data.status === "Success") {
                     const encryptedLevel = CryptoJS.AES.encrypt(

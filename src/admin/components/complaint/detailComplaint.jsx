@@ -10,7 +10,7 @@ function DetailComplaint() {
     const [loadingResponses, setLoadingResponses] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/complaints/${id}/responses`)
+        axios.get(`https://delightful-tan-scallop.cyclic.cloud/complaints/${id}/responses`)
             .then(response => {
                 const responseData = response.data.responses;
                 setResponses(responseData);
@@ -22,7 +22,7 @@ function DetailComplaint() {
     }, [id]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/complaints/${id}`)
+        axios.get(`https://delightful-tan-scallop.cyclic.cloud/complaints/${id}`)
             .then(response => {
                 setComplaint(response.data);
             })
@@ -82,7 +82,7 @@ function DetailComplaint() {
                                 <p>Date: {new Date(response.date_responses).toLocaleString()}</p>
                                 {response.image_url && (
                                     <img
-                                        src={`http://localhost:8081/uploads/${response.image_url}`}
+                                        src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${response.image_url}`}
                                         alt="Response Image"
                                         style={{ maxWidth: '100px' }}
                                     />

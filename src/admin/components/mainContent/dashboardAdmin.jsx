@@ -10,7 +10,7 @@ function DashboardAdmin() {
 
   useEffect(() => {
     // Fetch total report data
-    axios.get('http://localhost:8081/reportData')
+    axios.get('https://delightful-tan-scallop.cyclic.cloud/reportData')
       .then((response) => {
         const data = response.data;
         setTotalReports(data.totalReports);
@@ -21,7 +21,7 @@ function DashboardAdmin() {
       });
 
     // Fetch total UMKM data
-    axios.get('http://localhost:8081/umkm/posts') // Replace with your UMKM API endpoint
+    axios.get('https://delightful-tan-scallop.cyclic.cloud/umkm/posts') // Replace with your UMKM API endpoint
       .then((response) => {
         const umkmData = response.data;
         const totalUMKMsCount = umkmData.length; // Count the number of UMKM posts

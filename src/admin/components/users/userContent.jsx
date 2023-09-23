@@ -26,7 +26,7 @@ function UserContent() {
     });
 
     axiosInstance
-      .get("http://localhost:8081/users")
+      .get("https://delightful-tan-scallop.cyclic.cloud/users")
       .then((response) => {
         setUsers(response.data);
       })
@@ -52,7 +52,7 @@ function UserContent() {
 
     // Send a PUT request to update the user
     axios
-      .put(`http://localhost:8081/users/${editUser.iduser}`, {
+      .put(`https://delightful-tan-scallop.cyclic.cloud/users/${editUser.iduser}`, {
         username: newName,
         password: newPassword,
       })
@@ -75,7 +75,7 @@ function UserContent() {
   const handleAddUser = (user) => {
     // Send a POST request to add a new user
     axios
-      .post("http://localhost:8081/users", {
+      .post("https://delightful-tan-scallop.cyclic.cloud/users", {
         username: user.username,
         password: user.password,
         level: user.level,
@@ -84,7 +84,7 @@ function UserContent() {
       .then((response) => {
         // Reload the user list by making another GET request
         axios
-          .get("http://localhost:8081/users")
+          .get("https://delightful-tan-scallop.cyclic.cloud/users")
           .then((response) => {
             setUsers(response.data);
           })
@@ -100,7 +100,7 @@ function UserContent() {
   const handleDeleteClick = (userId) => {
     // Check if the user has posts
     axios
-      .get(`http://localhost:8081/users/${userId}/hasposts`)
+      .get(`https://delightful-tan-scallop.cyclic.cloud/users/${userId}/hasposts`)
       .then((response) => {
         const { hasPosts } = response.data;
         if (hasPosts) {
@@ -120,7 +120,7 @@ function UserContent() {
 
   const handleDeleteUser = (userId) => {
     axios
-      .delete(`http://localhost:8081/users/${userId}`)
+      .delete(`https://delightful-tan-scallop.cyclic.cloud/users/${userId}`)
       .then(() => {
         const updatedUsers = users.filter((user) => user.iduser !== userId);
         setUsers(updatedUsers);

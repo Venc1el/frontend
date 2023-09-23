@@ -54,7 +54,7 @@ function UmkmForm() {
         formData.append('alamat', alamat);
 
         try {
-            await axios.post('http://localhost:8081/posts', formData, {
+            await axios.post('https://delightful-tan-scallop.cyclic.cloud/posts', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

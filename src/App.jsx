@@ -40,7 +40,7 @@ function App() {
   const sessionEndNotificationRef = useRef(null);
   
   useEffect(() => {
-    if (cookie) {
+    if (storedEncryptedLevel) {
       // Fetch user info and decrypt user level
       const fetchData = async () => {
         const userResponse = await fetchUserInfo();
@@ -61,11 +61,11 @@ function App() {
       // If there's no token, set auth check as completed with no user info
       setAuthCheckCompleted(true);
     }
-  }, [cookie, storedEncryptedLevel]);
+  }, [storedEncryptedLevel]);
   
 
   useEffect(() => {
-    if (cookie) {
+    if (storedEncryptedLevel) {
       let sessionTimeout;
   
       // Set the session duration to 8 hours (28800000 milliseconds)
@@ -105,7 +105,7 @@ function App() {
         }
       };
     }
-  }, [cookie]);
+  }, [storedEncryptedLevel]);
 
   if (!authCheckCompleted) {
     return <div>Loading...</div>;
@@ -114,7 +114,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {userLevel === 'Admin' && cookie ? (
+        {userLevel === 'Admin' && storedEncryptedLevel ? (
           <>
             <Route path="/syscon" element={<><HeaderAdmin /><DashboardAdmin /></>} />
             <Route path="/syscon/user" element={<><HeaderAdmin /><UserContent /></>} />
@@ -127,7 +127,7 @@ function App() {
             <Route path="/syscon/umkm/update/:id" element={<><HeaderAdmin /><UpdatePosts /></>} />
             <Route path="/syscon/umkm/umkm-details/:id" element={<><HeaderAdmin /><UmkmDetails /></>} />
           </>
-        ) : userLevel !== 'Admin' && cookie ? (
+        ) : userLevel !== 'Admin' && storedEncryptedLevel ? (
           <>
             <Route path="/syscon" element={<><HeaderAdmin /><DashboardSyscon /></>} />
             <Route path="/syscon/aduan" element={<><HeaderAdmin /><UcomplaintContent userId={userId} /></>} />

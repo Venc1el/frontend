@@ -11,14 +11,13 @@ function ComplaintForm() {
     const [complaintText, setComplaintText] = useState('');
     const [alamat, setAlamat] = useState('');
     const [type, setType] = useState('PJU');
-    const initialPopup = type === 'PJU' ? 'PJU Rusak' : '';
+    const [popupInput, setPopupInput] = useState('');
     const initialKeterangan = type === 'Saluran' ? 'Genangan' : type === 'PJU' ? 'PJU Rusak' : 'Lainnya';
     const [status] = useState('Menunggu Respon');
     const [images, setImages] = useState([]);
     const [uploading, setUploading] = useState(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [coordinates, setCoordinates] = useState([]);
-    const [popupInput, setPopupInput] = useState(initialPopup);
     const [showPoint, setShowPoint] = useState(false);
     const [keterangan, setKeterangan] = useState(initialKeterangan);
     const [showAdditionalInput, setShowAdditionalInput] = useState(false);
@@ -57,7 +56,7 @@ function ComplaintForm() {
         console.log('popupInput:', popupInput);
 
         try {
-            await axios.post('http://localhost:8081/complaints', formData, {
+            await axios.post('https://delightful-tan-scallop.cyclic.cloud/complaints', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -285,24 +284,45 @@ function ComplaintForm() {
                                     </MapContainer>
                                 </div>
                             ) : (
-                                <MapContainer className='mt-5' center={[-7.321904, 112.713885]} zoom={16} style={{ width: "100%" }} scrollWheelZoom={false} touchZoom={false}>
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                                    />
-                                    <AddMarkerOnClick />
-                                    {marker && (
-                                        <Marker
-                                            position={marker.geocode}
-                                            draggable={true}
-                                            eventHandlers={{
-                                                dragend: (event) => handleMarkerDrag(event),
-                                            }}
-                                        >
-                                            <Popup>{popupInput}</Popup>
-                                        </Marker>
-                                    )}
-                                </MapContainer>
+                                <>
+                                    <div
+                                        className="max-w-full mb-8"
+                                        id="textarea"
+                                    >
+                                        <div className="mb-2 block">
+                                            <Label
+                                                htmlFor="comment"
+                                                value="Keterangan"
+                                            />
+                                        </div>
+                                        <Textarea
+                                            id="comment"
+                                            value={popupInput}
+                                            onChange={(e) => setPopupInput(e.target.value)}
+                                            placeholder='Ringkasan Aduan'
+                                            required
+                                            rows={2}
+                                        />
+                                    </div>
+                                    <MapContainer className='mt-5' center={[-7.321904, 112.713885]} zoom={16} style={{ width: "100%" }} scrollWheelZoom={false} touchZoom={false}>
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                                        />
+                                        <AddMarkerOnClick />
+                                        {marker && (
+                                            <Marker
+                                                position={marker.geocode}
+                                                draggable={true}
+                                                eventHandlers={{
+                                                    dragend: (event) => handleMarkerDrag(event),
+                                                }}
+                                            >
+                                                <Popup>{popupInput}</Popup>
+                                            </Marker>
+                                        )}
+                                    </MapContainer>
+                                </>
                             )}
                         </div>
                     </div>

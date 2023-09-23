@@ -17,7 +17,7 @@ const UseAuth = () => {
             setLevel(decryptedLevel);
             setAuth(true);
         } else {
-            axios.get('http://localhost:8081', { withCredentials: true })
+            axios.get('https://delightful-tan-scallop.cyclic.cloud', { withCredentials: true })
                 .then(res => {
                     if (res.data.status === 'Success') {
                         console.log('Server Response:', res.data);
