@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500&display=swap');
+
+*{
+    font-family: 'Poppins' , sans-serif;
+    font-weight: 400;
+}
+
+body{
+    background-color: #fbfbfb;
+}
+
+.leaflet-container{
+    height: 60vh;
+    width: 120vh;
+    z-index: 0;
+}
+
+
+.toast-success-red {
+    background-color: red;
+    color: white;
+}
