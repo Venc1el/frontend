@@ -186,13 +186,6 @@ function UmkmContent() {
                                                         Update
                                                     </Link>
                                                     <br />
-                                                    <a
-                                                        className="font-medium cursor-pointer text-red-600 dark:text-red-400 hover:underline"
-                                                        onClick={() => handleDelete(post.id)}
-                                                    >
-                                                        Delete
-                                                    </a>
-                                                    <br />
                                                     <Link
                                                         to={`/syscon/umkm/umkm-details/${post.id}`}
                                                         className="font-medium cursor-pointer text-green-600 dark:text-green-400 hover:underline"
