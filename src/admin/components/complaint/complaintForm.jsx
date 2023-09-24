@@ -6,6 +6,8 @@ import 'leaflet/dist/leaflet.css';
 import { useMapEvents, MapContainer, TileLayer, Polyline, CircleMarker, Popup, Marker } from 'react-leaflet';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Icon} from "leaflet"
+import customIconImage from '../../../assets/icon.svg';
 
 function ComplaintForm() {
     const [complaintText, setComplaintText] = useState('');
@@ -23,6 +25,11 @@ function ComplaintForm() {
     const [showAdditionalInput, setShowAdditionalInput] = useState(false);
     const [marker, setMarker] = useState(null);
     const navigate = useNavigate();
+
+    const customIcon = new Icon({
+        iconUrl: customIconImage, // Use the imported icon image
+        iconSize: [32, 32]
+    });
 
     const handleFileChange = (e) => {
         const selectedFiles = e.target.files[0];
@@ -317,6 +324,7 @@ function ComplaintForm() {
                                                 eventHandlers={{
                                                     dragend: (event) => handleMarkerDrag(event),
                                                 }}
+                                                icon = {customIcon}
                                             >
                                                 <Popup>{popupInput}</Popup>
                                             </Marker>

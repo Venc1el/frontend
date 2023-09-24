@@ -22,7 +22,7 @@ function AllMapData() {
 
     const customIcon = new Icon({
         iconUrl: customIconImage, // Use the imported icon image
-        iconSize: [38, 38]
+        iconSize: [32, 32]
     });
 
     return (
