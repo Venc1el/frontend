@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import UseAuth from "../../../server/useAuth";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 function HeaderAdmin() {
   const { level } = UseAuth()
@@ -25,26 +25,6 @@ function HeaderAdmin() {
         .catch(err => console.log(err));
     }
   };
-
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  // Add a click event listener to the sidebar to prevent event propagation
-  const sidebarRef = useRef(null);
-
-  useEffect(() => {
-    const handleSidebarClick = (e) => {
-      e.stopPropagation(); // Prevent the click event from propagating
-    };
-
-    sidebarRef.current.addEventListener("click", handleSidebarClick);
-
-    return () => {
-      sidebarRef.current.removeEventListener("click", handleSidebarClick);
-    };
-  }, []);
 
 
   return (
@@ -86,7 +66,6 @@ function HeaderAdmin() {
       </nav>
       <aside
         id="logo-sidebar"
-        ref={sidebarRef}
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
         aria-label="Sidebar"
