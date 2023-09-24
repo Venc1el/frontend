@@ -1,13 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import UseAuth from "../../../server/useAuth";
-import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
-
-
 const Header = () => {
-    const auth = Cookies.get('token')
+    const storedEncryptedLevel = localStorage.getItem('encryptedUserLevel');
 
     axios.defaults.withCredentials = true
     const handleLogout = () => {
@@ -38,7 +34,7 @@ const Header = () => {
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
                     </a>
                     <div className="flex items-center lg:order-2">
-                        {auth ? (
+                        {storedEncryptedLevel ? (
                             <button onClick={handleLogout}>Logout</button>
                         ) : (
 
