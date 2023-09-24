@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline } from '
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import {Icon} from "leaflet"
+import customIconImage from '../../../assets/icon.svg';
 
 function AllMapData() {
     const [coordinates, setCoordinates] = useState([]);
@@ -20,9 +21,9 @@ function AllMapData() {
     }, []);
 
     const customIcon = new Icon({
-        icon: require("../../../assets/icon.svg"),
-        iconSize:[38,38]
-    })
+        iconUrl: customIconImage, // Use the imported icon image
+        iconSize: [38, 38]
+    });
 
     return (
         <div>
