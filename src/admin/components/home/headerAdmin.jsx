@@ -26,6 +26,13 @@ function HeaderAdmin() {
     }
   };
 
+
+  const closeSidebar = () => {
+    if (isSidebarOpen) {
+      setIsSidebarOpen(false);
+    }
+  };
+
   useEffect(() => {
     document.body.addEventListener("click", closeSidebar);
     return () => {
