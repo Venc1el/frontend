@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import UseAuth from "../../../server/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function HeaderAdmin() {
   const { level } = UseAuth()
@@ -25,6 +25,13 @@ function HeaderAdmin() {
         .catch(err => console.log(err));
     }
   };
+
+  useEffect(() => {
+    document.body.addEventListener("click", closeSidebar);
+    return () => {
+      document.body.removeEventListener("click", closeSidebar);
+    };
+  }, [isSidebarOpen]);
 
 
   return (
