@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import L from "leaflet"
 
 function AllMapData() {
     const [coordinates, setCoordinates] = useState([]);
@@ -17,6 +18,11 @@ function AllMapData() {
                 console.error('Error fetching coordinates:', error);
             });
     }, []);
+
+    const markerIcon = new L.Icon({
+        icon : require("../../../assets/icon.svg"),
+        iconSize : [37,49]
+    })
 
     return (
         <div>
@@ -34,7 +40,7 @@ function AllMapData() {
                         return (
                             <React.Fragment key={index}>
                                 {isSingleMarker ? (
-                                    <Marker position={[coordinates[0].lat, coordinates[0].lng]}>
+                                    <Marker position={[coordinates[0].lat, coordinates[0].lng]} icon={markerIcon}>
                                         <Popup>{popup_content}</Popup>
                                     </Marker>
                                 ) : (
