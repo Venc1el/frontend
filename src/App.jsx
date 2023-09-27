@@ -38,7 +38,22 @@ function App() {
 
   // Ref for session ending notification
   const sessionEndNotificationRef = useRef(null);
-  
+
+  // Function to remove items from local storage when the tab or browser is closed
+  const removeLocalStorageOnTabClose = () => {
+    localStorage.removeItem('encryptedUserLevel');
+  };
+
+  useEffect(() => {
+    // Add event listener for the beforeunload event to remove local storage on tab close
+    window.addEventListener('beforeunload', removeLocalStorageOnTabClose);
+
+    return () => {
+      // Remove event listener when the component unmounts
+      window.removeEventListener('beforeunload', removeLocalStorageOnTabClose);
+    };
+  }, []);
+
   useEffect(() => {
     if (storedEncryptedLevel) {
       // Fetch user info and decrypt user level
@@ -47,43 +62,43 @@ function App() {
         if (userResponse !== null) {
           setUserId(userResponse);
         }
-  
+
         if (storedEncryptedLevel) {
           const decryptedLevel = CryptoJS.AES.decrypt(storedEncryptedLevel, secretKey).toString(CryptoJS.enc.Utf8);
           setUserLevel(decryptedLevel);
         }
-  
+
         setAuthCheckCompleted(true);
       };
-  
+
       fetchData();
     } else {
       // If there's no token, set auth check as completed with no user info
       setAuthCheckCompleted(true);
     }
   }, [storedEncryptedLevel]);
-  
+
 
   useEffect(() => {
     if (storedEncryptedLevel) {
       let sessionTimeout;
-  
+
       // Set the session duration to 8 hours (28800000 milliseconds)
       const sessionDuration = 28800000; // 8 hours in milliseconds
-  
+
       // Calculate the time when the session should end
       const sessionEndTime = Date.now() + sessionDuration;
-  
+
       // Calculate the time when the toast notification should appear (30 minutes before the session ends)
       const toastNotificationTime = sessionEndTime - 1800000; // 30 minutes before session end
-  
+
       const handleSessionTimeout = () => {
         clearTimeout(sessionTimeout);
         Cookies.remove('token');
         localStorage.removeItem('encryptedUserLevel');
         window.location.href = '/login';
       };
-  
+
       sessionTimeout = setTimeout(() => {
         sessionEndNotificationRef.current = toast.warning(
           'Your session is ending in 10 minutes. Please save your work.',
@@ -96,7 +111,7 @@ function App() {
           handleSessionTimeout();
         }, 4000);
       }, toastNotificationTime - Date.now());
-  
+
       // Clean up event listeners and timers when the component unmounts
       return () => {
         clearTimeout(sessionTimeout);
