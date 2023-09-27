@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Accordion } from 'flowbite-react';
 
 function DefaultAccordion() {
     const [searchQuery, setSearchQuery] = useState('');
     const [accordionData] = useState([
         {
-            title: 'What is Flowbite?',
-            content: 'Flowbite is an open-source library of interactive components...',
+            title: 'Bagaimana Cara Mendaftar Kependudukan?',
+            content: 'Anda dapat mendaftar kependudukan dengan mengunjungi kantor pelayanan kependudukan terdekat...',
         },
         {
-            title: 'Is there a Figma file available?',
-            content: 'Flowbite is first conceptualized and designed using the Figma software...',
+            title: 'Apa Syarat Untuk Mengurus Kartu Identitas Penduduk?',
+            content: 'Untuk mengurus Kartu Identitas Penduduk (KTP), Anda perlu memenuhi syarat-syarat tertentu, seperti...',
         },
         {
-            title: 'What are the differences between Flowbite and Tailwind UI?',
-            content: 'The main difference is that the core components from Flowbite are open source...',
+            title: 'Apa Layanan yang Tersedia di Kantor Kependudukan?',
+            content: 'Kantor kependudukan menyediakan berbagai layanan, seperti pendaftaran kelahiran, perubahan data penduduk, dan lainnya...',
         },
     ]);
 
