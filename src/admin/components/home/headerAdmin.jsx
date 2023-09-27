@@ -55,11 +55,11 @@ function HeaderAdmin() {
                   />
                 </svg>
               </button>
-              <a href="/syscon" className="flex ml-2 md:mr-24">
+              <Link to ="/syscon" className="flex ml-2 md:mr-24">
                 <span className="self-center text-xl sm:text-2xl whitespace-nowrap dark:text-white">
                   Welcome , {level}
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
