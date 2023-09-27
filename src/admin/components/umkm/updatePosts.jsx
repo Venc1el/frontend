@@ -88,8 +88,6 @@ function UpdateUmkmPost() {
 
     axios.put(`${baseUrl}/umkm/posts/${id}`, postData)
       .then((response) => {
-        console.log(response.data);
-
         // Set uploadSuccess to true upon successful upload
         setUploadSuccess(true);
 

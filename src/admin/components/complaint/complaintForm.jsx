@@ -60,8 +60,6 @@ function ComplaintForm() {
             formData.append('image', images);
         }
 
-        console.log('popupInput:', popupInput);
-
         try {
             await axios.post('https://delightful-tan-scallop.cyclic.cloud/complaints', formData, {
                 headers: {

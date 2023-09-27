@@ -20,12 +20,9 @@ const UseAuth = () => {
             axios.get('https://delightful-tan-scallop.cyclic.cloud', { withCredentials: true })
                 .then(res => {
                     if (res.data.status === 'Success') {
-                        console.log('Server Response:', res.data);
                         setAuth(true);
                         setName(res.data.name);
                         setLevel(res.data.level);
-                        console.log('Server Response:', res.data);
-
                         // Set userId here
                         setUserId(res.data.id);
 

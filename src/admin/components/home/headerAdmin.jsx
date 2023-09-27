@@ -22,7 +22,7 @@ function HeaderAdmin() {
             alert('Error');
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     }
   };
 
