@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
-import Cookies from "js-cookie";
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -23,10 +22,7 @@ const Login = () => {
             .then((res) => {
                 if (res.data.status === "Success") {
                     // Assuming your server responds with a token in the response
-                    const token = res.data.token;
-
-                    // Store the token in a cookie
-                    Cookies.set("token", token, { expires: 7 });
+    
                     const encryptedLevel = CryptoJS.AES.encrypt(
                         res.data.level,
                         secretKey
