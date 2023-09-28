@@ -7,19 +7,13 @@ function HeaderAdmin() {
   const { level } = UseAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const token = "your-secret-key";
-
   const navigate = useNavigate()
   axios.defaults.withCredentials = true
 
   const handleLogout = () => {
     const shouldLogout = window.confirm("Are you sure you want to log out?");
     if (shouldLogout) {
-      axios.get('https://delightful-tan-scallop.cyclic.cloud/logout', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      axios.get('https://delightful-tan-scallop.cyclic.cloud/logout')
         .then(res => {
           if (res.data.status === "Success") {
             localStorage.removeItem('encryptedUserLevel')
