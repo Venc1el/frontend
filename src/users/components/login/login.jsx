@@ -26,7 +26,7 @@ const Login = () => {
                     const token = res.data.token;
 
                     // Store the token in a cookie
-                    Cookies.set("token", token, { expires: "8h" });
+                    Cookies.set("token", token, { expires: 7 });
                     const encryptedLevel = CryptoJS.AES.encrypt(
                         res.data.level,
                         secretKey
