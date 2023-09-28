@@ -7,13 +7,19 @@ function HeaderAdmin() {
   const { level } = UseAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const token = "your-secret-key";
+
   const navigate = useNavigate()
   axios.defaults.withCredentials = true
 
   const handleLogout = () => {
     const shouldLogout = window.confirm("Are you sure you want to log out?");
     if (shouldLogout) {
-      axios.get('https://delightful-tan-scallop.cyclic.cloud/logout')
+      axios.get('https://delightful-tan-scallop.cyclic.cloud/logout', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
         .then(res => {
           if (res.data.status === "Success") {
             localStorage.removeItem('encryptedUserLevel')
@@ -55,7 +61,7 @@ function HeaderAdmin() {
                   />
                 </svg>
               </button>
-              <Link to ="/syscon" className="flex ml-2 md:mr-24">
+              <Link to="/syscon" className="flex ml-2 md:mr-24">
                 <span className="self-center text-xl sm:text-2xl whitespace-nowrap dark:text-white">
                   Welcome , {level}
                 </span>
