@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 const Header = () => {
     const storedEncryptedLevel = localStorage.getItem('encryptedUserLevel');
     const location = useLocation();
+    const token = Cookies.get('token');
 
     axios.defaults.withCredentials = true;
 
@@ -36,7 +37,7 @@ const Header = () => {
                         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Jambangan</span>
                     </Link>
                     <div className="flex items-center lg:order-2">
-                        {storedEncryptedLevel ? (
+                        {token ? (
                             <button onClick={handleLogout}>Logout</button>
                         ) : (
                             <Link
