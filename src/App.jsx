@@ -101,7 +101,7 @@ function App() {
       // Add an event listener for beforeunload to clear localStorage
       window.addEventListener('beforeunload', () => {
         // Ensure data is removed from localStorage when the user closes the tab or browser
-        localStorage.removeItem('encryptedUserLevel');
+        
       });
   
       // Clean up event listeners and timers when the component unmounts
@@ -112,7 +112,7 @@ function App() {
         }
         // Remove the beforeunload event listener when the component unmounts
         window.removeEventListener('beforeunload', () => {
-          localStorage.removeItem('encryptedUserLevel');
+          
         });
       };
     }
