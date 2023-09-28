@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = () => {
     const storedEncryptedLevel = localStorage.getItem('encryptedUserLevel');
@@ -13,6 +14,7 @@ const Header = () => {
             .then(res => {
                 if (res.data.status === "Success") {
                     localStorage.removeItem('encryptedUserLevel');
+                    Cookies.remove("token");
                     window.location.reload();
                 } else {
                     alert('Error');

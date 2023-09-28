@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Cookies from "js-cookie";
 import UseAuth from "../../../server/useAuth";
 import { useState } from "react";
 
@@ -17,6 +18,7 @@ function HeaderAdmin() {
         .then(res => {
           if (res.data.status === "Success") {
             localStorage.removeItem('encryptedUserLevel')
+            Cookies.remove("token")
             navigate("/");
           } else {
             alert('Error');
