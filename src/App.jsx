@@ -97,12 +97,7 @@ function App() {
           handleSessionTimeout();
         }, 4000);
       }, toastNotificationTime - Date.now());
-  
-      // Add an event listener for beforeunload to clear localStorage
-      window.addEventListener('beforeunload', () => {
-        // Ensure data is removed from localStorage when the user closes the tab or browser
-        
-      });
+
   
       // Clean up event listeners and timers when the component unmounts
       return () => {
@@ -110,10 +105,6 @@ function App() {
         if (sessionEndNotificationRef.current) {
           toast.dismiss(sessionEndNotificationRef.current);
         }
-        // Remove the beforeunload event listener when the component unmounts
-        window.removeEventListener('beforeunload', () => {
-          
-        });
       };
     }
   }, [storedEncryptedLevel]);
