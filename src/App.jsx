@@ -41,7 +41,7 @@ function App() {
   
   
   useEffect(() => {
-    if (storedEncryptedLevel) {
+    if (token) {
       // Fetch user info and decrypt user level
       const fetchData = async () => {
         const userResponse = await fetchUserInfo();
@@ -62,7 +62,7 @@ function App() {
       // If there's no token, set auth check as completed with no user info
       setAuthCheckCompleted(true);
     }
-  }, [storedEncryptedLevel]);
+  }, [token]);
   
 
   useEffect(() => {

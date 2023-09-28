@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import Cookies from "js-cookie";
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -16,9 +17,17 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post("https://delightful-tan-scallop.cyclic.cloud/login", values, {withCredentials : true})
+            .post("https://delightful-tan-scallop.cyclic.cloud/login", values, {
+                withCredentials: true,
+            })
             .then((res) => {
                 if (res.data.status === "Success") {
+                    // Assuming your server responds with a token in the response
+                    const token = res.data.token;
+
+                    // Store the token in a cookie
+                    Cookies.set("token", token, { expires: 7 }); // You can set an expiration date for the cookie (e.g., 7 days)
+
                     const encryptedLevel = CryptoJS.AES.encrypt(
                         res.data.level,
                         secretKey
@@ -33,6 +42,7 @@ const Login = () => {
                 setErrorMessage("Incorrect username or password."); // Handle incorrect credentials
             });
     };
+
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
