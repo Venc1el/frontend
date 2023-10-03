@@ -53,6 +53,7 @@ function UpdateUmkmPost() {
     }));
   };
 
+
   // Function to format kategori input
   const handleKategoriChange = (e) => {
     const inputText = e.target.value;
@@ -82,6 +83,8 @@ function UpdateUmkmPost() {
     postData.append('content', formData.content);
     postData.append('alamat', formData.alamat);
     postData.append('kategori', formData.kategori);
+
+    
     if (formData.image) {
       postData.append('image', formData.image);
     }
