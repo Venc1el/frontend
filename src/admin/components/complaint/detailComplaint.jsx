@@ -59,6 +59,7 @@ function DetailComplaint() {
                             alt='Complaint'
                             className='max-w-lg max-h-60 rounded-lg'
                         />
+                        {console.log(response.image_url)}
                     </div>
                 </div>
             ) : (
