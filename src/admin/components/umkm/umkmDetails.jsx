@@ -102,7 +102,7 @@ function UmkmDetails() {
             {/* Umkm Details */}
             {umkm.image && (
                 <img
-                    src={`${post.image}`}
+                    src={`${umkm.image}`}
                     alt="Response Image"
                     className='w-1/3'
                 />
