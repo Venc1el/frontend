@@ -88,7 +88,7 @@ function DetailsUmkm() {
                     </ol>
                 </nav>
                 {umkm.image && (
-                    <img className="object-cover w-full h-60 rounded-t-lg" src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${umkm.image}`} alt="" />
+                    <img className="object-cover w-full h-60 rounded-t-lg" src={`${post.image}`} alt="" />
                 )}
                 <div className="p-5">
                     <h5 className="mb-2 text-xs text-gray-700 dark:text-white">

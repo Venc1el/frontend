@@ -127,7 +127,7 @@ function UmkmContent() {
                                         {post.image && (
                                             <td className="px-6 py-4">
                                                 <img
-                                                    src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${post.image}`}
+                                                    src={`${post.image}`}
                                                     alt=""
                                                     className="img-fluid rounded-lg"
                                                     style={{ maxWidth: '50vw', height: '12vh' }}

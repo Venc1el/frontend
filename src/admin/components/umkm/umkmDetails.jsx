@@ -102,7 +102,7 @@ function UmkmDetails() {
             {/* Umkm Details */}
             {umkm.image && (
                 <img
-                    src={`https://delightful-tan-scallop.cyclic.cloud/uploads/${umkm.image}`}
+                    src={`${post.image}`}
                     alt="Response Image"
                     className='w-1/3'
                 />
