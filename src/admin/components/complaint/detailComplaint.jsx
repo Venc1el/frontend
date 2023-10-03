@@ -56,7 +56,7 @@ function DetailComplaint() {
                         <div className='mb-4'>
                             <h2 className='font-medium'>Image:</h2>
                             <img
-                                src={complaint.image_url}
+                                src={`${complaint.image_url}`}
                                 alt='Complaint'
                                 className='max-w-lg max-h-60 rounded-lg'
                             />
