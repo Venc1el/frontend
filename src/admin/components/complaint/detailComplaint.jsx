@@ -52,15 +52,16 @@ function DetailComplaint() {
                         <h2 className='font-medium'>Complaint Alamat:</h2>
                         <p>{complaint.alamat}</p>
                     </div>
-                    <div className='mb-4'>
-                        <h2 className='font-medium'>Image:</h2>
-                        <img
-                            src={`${complaint.image_url}`}
-                            alt='Complaint'
-                            className='max-w-lg max-h-60 rounded-lg'
-                        />
-                        {console.log(complaint.image_url)}
-                    </div>
+                    {complaint.image_url && (
+                        <div className='mb-4'>
+                            <h2 className='font-medium'>Image:</h2>
+                            <img
+                                src={`${complaint.image_url}`}
+                                alt=""
+                                className='max-w-lg max-h-60 rounded-lg'
+                            />
+                        </div>
+                    )}
                 </div>
             ) : (
                 <p>Loading complaint details...</p>
@@ -77,11 +78,13 @@ function DetailComplaint() {
                                 <p>Complaint ID: {response.complaint_id}</p>
                                 <p>Text: {response.text}</p>
                                 <p>Date: {new Date(response.date_responses).toLocaleString()}</p>
-                                <img
-                                    src={`${response.image_url}`}
-                                    alt="Response Image"
-                                    style={{ maxWidth: '100px' }}
-                                />
+                                {response.image_url && (
+                                    <img
+                                        src={`${response.image_url}`}
+                                        alt=""
+                                        style={{ maxWidth: '100px' }}
+                                    />
+                                )}
                             </li>
                         ))}
                     </ul>
