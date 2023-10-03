@@ -52,7 +52,7 @@ function DetailComplaint() {
                         <h2 className='font-medium'>Complaint Alamat:</h2>
                         <p>{complaint.alamat}</p>
                     </div>
-                    {complaint.image_url && (
+                    {complaint.image_url && complaint.image_url.startsWith('https://') && (
                         <div className='mb-4'>
                             <h2 className='font-medium'>Image:</h2>
                             <img
@@ -78,7 +78,7 @@ function DetailComplaint() {
                                 <p>Complaint ID: {response.complaint_id}</p>
                                 <p>Text: {response.text}</p>
                                 <p>Date: {new Date(response.date_responses).toLocaleString()}</p>
-                                {response.image_url && (
+                                {response.image_url && response.image_url.startsWith('https://') && (
                                     <img
                                         src={`${response.image_url}`}
                                         alt=""
