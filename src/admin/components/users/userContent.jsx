@@ -68,7 +68,14 @@ function UserContent() {
         setPasswordsMatch(true);
       })
       .catch((error) => {
-        console.error("Error updating user:", error);
+        if (error.response && error.response.status === 400) {
+            // Username already exists, show an alert
+            window.alert('Username already exists. Please choose a different username.');
+          } else {
+            // Other errors, log the error or show a generic error message
+            console.error('Error updating user:', error);
+            window.alert('Error updaating user. Please try again later.');
+          }
       });
   };
 
@@ -79,7 +86,7 @@ function UserContent() {
         username: user.username,
         password: user.password,
         level: user.level,
-        aktif: 0, // Set aktif to 1 for a new user
+        aktif: 0,
       })
       .then((response) => {
         // Reload the user list by making another GET request
@@ -93,7 +100,14 @@ function UserContent() {
           });
       })
       .catch((error) => {
-        console.error("Error adding user:", error);
+        if (error.response && error.response.status === 400) {
+          // Username already exists, show an alert
+          window.alert('Username already exists. Please choose a different username.');
+        } else {
+          // Other errors, log the error or show a generic error message
+          console.error('Error adding user:', error);
+          window.alert('Error adding user. Please try again later.');
+        }
       });
   };
 
