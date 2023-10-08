@@ -18,7 +18,7 @@ function SpecificMapData() {
                 setUserId(id);
 
                 if (id) {
-                    const response = await axios.get(`https://your-backend-url/maps/user/${id}`);
+                    const response = await axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${id}`);
                     const { coordinates } = response.data;
                     setCoordinates(coordinates);
                 }
