@@ -10,28 +10,28 @@ function DashboardSyscon() {
     const [totalUMKMs, setTotalUMKMs] = useState(0);
 
     useEffect(() => {
-        // Fetch total report data for a specific user (replace userId with the desired user's ID)
-        const userId = fetchUserInfo(); // Replace with the user's ID you want to fetch data for
-        axios.get(`https://delightful-tan-scallop.cyclic.cloud/reportData/${userId}`)
-            .then((response) => {
-                const data = response.data;
-                setTotalReports(data.totalReports);
-                setRespondedReports(data.respondedReports);
-            })
-            .catch((error) => {
-                console.error('Error fetching report data:', error);
-            });
+        const fetchData = async () => {
+            try {
+                // Fetch user ID
+                const userId = await fetchUserInfo();
 
-        // Fetch total UMKM data
-        axios.get('https://delightful-tan-scallop.cyclic.cloud/umkm/posts')
-            .then((response) => {
-                const umkmData = response.data;
+                // Fetch total report data for the user
+                const reportResponse = await axios.get(`https://delightful-tan-scallop.cyclic.cloud/reportData/${userId}`);
+                const reportData = reportResponse.data;
+                setTotalReports(reportData.totalReports);
+                setRespondedReports(reportData.respondedReports);
+
+                // Fetch total UMKM data
+                const umkmResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/umkm/posts');
+                const umkmData = umkmResponse.data;
                 const totalUMKMsCount = umkmData.length;
                 setTotalUMKMs(totalUMKMsCount);
-            })
-            .catch((error) => {
-                console.error('Error fetching UMKM data:', error);
-            });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (
