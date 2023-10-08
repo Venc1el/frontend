@@ -24,7 +24,7 @@ function AduanContent() {
 	const getCurrentPosts = () => {
 		const indexOfLastPost = currentPage * postsPerPage;
 		const indexOfFirstPost = indexOfLastPost - postsPerPage;
-		return complaints.slice(indexOfFirstPost, indexOfLastPost); // Change 'posts' to 'complaints' here
+		return complaints.slice(indexOfFirstPost, indexOfLastPost);
 	};
 
 	const handlePageChange = (pageNumber) => {

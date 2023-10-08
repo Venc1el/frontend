@@ -27,7 +27,7 @@ function ComplaintForm() {
     const navigate = useNavigate();
 
     const customIcon = new Icon({
-        iconUrl: customIconImage, // Use the imported icon image
+        iconUrl: customIconImage,
         iconSize: [32, 32]
     });
 

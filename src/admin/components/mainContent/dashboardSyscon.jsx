@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ColoringCard from '../smContent/colorCards';
 import fetchUserInfo from '../../../server/getUserId';
+import AllMapData from '../smContent/allMapsData';
 
 function DashboardSyscon() {
     const [totalReports, setTotalReports] = useState(0);
@@ -73,6 +74,9 @@ function DashboardSyscon() {
                         />
                     </div>
                 </div>
+
+                <AllMapData />
+
             </div>
         </div>
     );
