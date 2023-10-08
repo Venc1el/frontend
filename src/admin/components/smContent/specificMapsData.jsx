@@ -4,46 +4,33 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
 import customIconImage from '../../../assets/icon.svg';
-import fetchUserInfo from '../../../server/getUserId';
+import {fetchUserInfo} from '../../../server/getUserId';
 
 function SpecificMapData() {
     const [coordinates, setCoordinates] = useState([]);
     const [userId, setUserId] = useState(null); // State to store user ID
 
-    useEffect(() => {   
-        // Fetch user ID after successful login
-        fetchUserInfo()
-            .then(userId => {
-                if (userId) {
-                    // Set the retrieved user ID to the state
-                    setUserId(userId);
-                } else {
-                    // Handle the case where user ID is not available (e.g., user not logged in)
-                    console.error('User ID not available.');
-                }
-            })
-            .catch(error => {
-                // Handle errors that occur during the user ID retrieval
-                console.error('Error fetching user ID:', error);
-            });
-    }, []); // Empty dependency array ensures the effect runs once after the initial render
-
     useEffect(() => {
-        // Fetch user-specific map data based on the stored userId
-        if (userId) {
-            axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${userId}`)
-                .then((response) => {
-                    const { coordinates } = response.data;
+        const fetchData = async () => {
+            try {
+                const userResponse = await fetchUserInfo();
+                if (userResponse !== null) {
+                    setUserId(userResponse);
+                    // Make a GET request to fetch coordinates using the obtained userId
+                    const response = await axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${userResponse}`);
+                    const { coordinates } = response.data; // Access the 'coordinates' property
                     setCoordinates(coordinates);
-                })
-                .catch((error) => {
-                    console.error('Error fetching user-specific coordinates:', error);
-                });
-        }
-    }, [userId]); // Fetch data whenever userId changes
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array means this effect will run once after the initial render
 
     const customIcon = new Icon({
-        iconUrl: customIconImage,
+        iconUrl: customIconImage, // Use the imported icon image
         iconSize: [32, 32]
     });
 
