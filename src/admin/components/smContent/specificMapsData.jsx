@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
 import customIconImage from '../../../assets/icon.svg';
-import {fetchUserInfo} from '../../../server/getUserId';
+import fetchUserInfo from '../../../server/getUserId';
 
 function SpecificMapData() {
     const [coordinates, setCoordinates] = useState([]);
