@@ -19,12 +19,7 @@ function SpecificMapData() {
                     // Make a GET request to fetch coordinates using the obtained userId
                     const response = await axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${userResponse}`);
                     const { coordinates } = response.data; // Access the 'coordinates' property
-                    const parsedCoordinates = coordinates.map(coord => ({
-                        lat: parseFloat(coord.lat),
-                        lng: parseFloat(coord.lng)
-                    }));
-    
-                    setCoordinates(parsedCoordinates);
+                    setCoordinates(coordinates);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
