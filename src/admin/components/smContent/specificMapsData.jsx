@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
@@ -13,29 +13,28 @@ function SpecificMapData() {
     useEffect(() => {
         // Fetch user-specific map data based on the stored userId
         async function fetchData() {
-            const id = await fetchUserInfo();
-            setUserId(id);
+            try {
+                const id = await fetchUserInfo(); // Wait for the Promise to resolve
+                setUserId(id);
 
-            if (id) {
-                axios
-                    .get(`https://your-backend-url/maps/user/${id}`)
-                    .then((response) => {
-                        const { coordinates } = response.data;
-                        setCoordinates(coordinates);
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching user-specific coordinates:', error);
-                    });
+                if (id) {
+                    const response = await axios.get(`https://your-backend-url/maps/user/${id}`);
+                    const { coordinates } = response.data;
+                    setCoordinates(coordinates);
+                }
+            } catch (error) {
+                console.error('Error fetching user-specific coordinates:', error);
             }
         }
 
         fetchData();
-    }, []);
+    }, []); // Empty dependency array ensures useEffect runs once after the initial render
 
     const customIcon = new Icon({
-        iconUrl: customIconImage, // Use the imported icon image
+        iconUrl: customIconImage,
         iconSize: [32, 32],
     });
+
 
     return (
         <div>
