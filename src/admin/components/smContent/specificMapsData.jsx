@@ -2,49 +2,39 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import { Icon } from "leaflet";
+import { Icon } from 'leaflet';
 import customIconImage from '../../../assets/icon.svg';
 import fetchUserInfo from '../../../server/getUserId';
 
 function SpecificMapData() {
     const [coordinates, setCoordinates] = useState([]);
-    const [userId, setUserId] = useState(null); // State to store user ID
-
-    useEffect(() => {
-        // Fetch user ID after successful login
-        fetchUserInfo()
-            .then(userId => {
-                if (userId) {
-                    // Set the retrieved user ID to the state
-                    setUserId(userId);
-                } else {
-                    // Handle the case where user ID is not available (e.g., user not logged in)
-                    console.error('User ID not available.');
-                }
-            })
-            .catch(error => {
-                // Handle errors that occur during the user ID retrieval
-                console.error('Error fetching user ID:', error);
-            });
-    }, []); // Empty dependency array ensures the effect runs once after the initial render
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         // Fetch user-specific map data based on the stored userId
-        if (userId) {
-            axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${userId}`)
-                .then((response) => {
-                    const { coordinates } = response.data;
-                    setCoordinates(coordinates);
-                })
-                .catch((error) => {
-                    console.error('Error fetching user-specific coordinates:', error);
-                });
+        async function fetchData() {
+            const id = await fetchUserInfo();
+            setUserId(id);
+
+            if (id) {
+                axios
+                    .get(`https://your-backend-url/maps/user/${id}`)
+                    .then((response) => {
+                        const { coordinates } = response.data;
+                        setCoordinates(coordinates);
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching user-specific coordinates:', error);
+                    });
+            }
         }
-    }, [userId]); // Fetch data whenever userId changes
+
+        fetchData();
+    }, []);
 
     const customIcon = new Icon({
-        iconUrl: customIconImage,
-        iconSize: [32, 32]
+        iconUrl: customIconImage, // Use the imported icon image
+        iconSize: [32, 32],
     });
 
     return (
@@ -57,6 +47,7 @@ function SpecificMapData() {
                 {coordinates.map((data, index) => {
                     const { coordinates, popup_content } = data;
 
+                    // Check if coordinates array is not empty and has at least one valid coordinate
                     if (Array.isArray(coordinates) && coordinates.length > 0 && coordinates[0].lat !== undefined && coordinates[0].lng !== undefined) {
                         const isSingleMarker = coordinates.length === 1;
                         return (
@@ -67,10 +58,7 @@ function SpecificMapData() {
                                     </Marker>
                                 ) : (
                                     <React.Fragment>
-                                        <Polyline
-                                            pathOptions={{ color: 'blue' }}
-                                            positions={coordinates.map((coord) => [coord.lat, coord.lng])}
-                                        >
+                                        <Polyline pathOptions={{ color: 'blue' }} positions={coordinates.map((coord) => [coord.lat, coord.lng])}>
                                             <Popup>{popup_content}</Popup>
                                         </Polyline>
                                     </React.Fragment>
@@ -78,7 +66,7 @@ function SpecificMapData() {
                             </React.Fragment>
                         );
                     } else {
-                        return null;
+                        return null; // Skip rendering if coordinates are empty or invalid
                     }
                 })}
             </MapContainer>
