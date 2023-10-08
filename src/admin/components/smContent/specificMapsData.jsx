@@ -2,39 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import { Icon } from 'leaflet';
+import { Icon } from "leaflet";
 import customIconImage from '../../../assets/icon.svg';
 import fetchUserInfo from '../../../server/getUserId';
 
 function SpecificMapData() {
     const [coordinates, setCoordinates] = useState([]);
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(null); // State to store user ID
+
+    useEffect(() => {   
+        // Fetch user ID after successful login
+        fetchUserInfo()
+            .then(userId => {
+                if (userId) {
+                    // Set the retrieved user ID to the state
+                    setUserId(userId);
+                } else {
+                    // Handle the case where user ID is not available (e.g., user not logged in)
+                    console.error('User ID not available.');
+                }
+            })
+            .catch(error => {
+                // Handle errors that occur during the user ID retrieval
+                console.error('Error fetching user ID:', error);
+            });
+    }, []); // Empty dependency array ensures the effect runs once after the initial render
 
     useEffect(() => {
         // Fetch user-specific map data based on the stored userId
-        async function fetchData() {
-            try {
-                const id = await fetchUserInfo(); // Wait for the Promise to resolve
-                setUserId(id);
-
-                if (id) {
-                    const response = await axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${id}`);
+        if (userId) {
+            axios.get(`https://delightful-tan-scallop.cyclic.cloud/maps/user/${userId}`)
+                .then((response) => {
                     const { coordinates } = response.data;
                     setCoordinates(coordinates);
-                }
-            } catch (error) {
-                console.error('Error fetching user-specific coordinates:', error);
-            }
+                })
+                .catch((error) => {
+                    console.error('Error fetching user-specific coordinates:', error);
+                });
         }
-
-        fetchData();
-    }, []); // Empty dependency array ensures useEffect runs once after the initial render
+    }, [userId]); // Fetch data whenever userId changes
 
     const customIcon = new Icon({
         iconUrl: customIconImage,
-        iconSize: [32, 32],
+        iconSize: [32, 32]
     });
-
 
     return (
         <div>
@@ -46,7 +57,6 @@ function SpecificMapData() {
                 {coordinates.map((data, index) => {
                     const { coordinates, popup_content } = data;
 
-                    // Check if coordinates array is not empty and has at least one valid coordinate
                     if (Array.isArray(coordinates) && coordinates.length > 0 && coordinates[0].lat !== undefined && coordinates[0].lng !== undefined) {
                         const isSingleMarker = coordinates.length === 1;
                         return (
@@ -57,7 +67,10 @@ function SpecificMapData() {
                                     </Marker>
                                 ) : (
                                     <React.Fragment>
-                                        <Polyline pathOptions={{ color: 'blue' }} positions={coordinates.map((coord) => [coord.lat, coord.lng])}>
+                                        <Polyline
+                                            pathOptions={{ color: 'blue' }}
+                                            positions={coordinates.map((coord) => [coord.lat, coord.lng])}
+                                        >
                                             <Popup>{popup_content}</Popup>
                                         </Polyline>
                                     </React.Fragment>
@@ -65,7 +78,7 @@ function SpecificMapData() {
                             </React.Fragment>
                         );
                     } else {
-                        return null; // Skip rendering if coordinates are empty or invalid
+                        return null;
                     }
                 })}
             </MapContainer>
