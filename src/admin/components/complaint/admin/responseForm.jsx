@@ -7,7 +7,7 @@ import { Label, Textarea } from 'flowbite-react';
 function ComplaintResponse() {
     const { id } = useParams();
     const [text, setText] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('Dilaporkan');
     const [images, setSelectedImage] = useState([]);
     const [uploading, setUploading] = useState(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -61,10 +61,6 @@ function ComplaintResponse() {
     return (
         <div className="p-2 sm:ml-64">
             <div className="sm:p-4 rounded-lg dark:border-gray-700 mt-20">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                    This information will be displayed publicly so be careful what you share.
-                </p>
                 <form onSubmit={handleSubmitResponse} encType="multipart/form-data" >
                     <div className="space-y-12">
                         <div className="border-b border-gray-900/10 pb-12">
