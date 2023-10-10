@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { BluePagination } from '../../../pagination/bluePagination';
 
 function UserUmkm() {
     const [umkmPosts, setUmkmPosts] = useState([]);
     const [filterCategory, setFilterCategory] = useState('All');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
 
     useEffect(() => {
         axios.get('https://delightful-tan-scallop.cyclic.cloud/public/posts')
@@ -32,20 +35,26 @@ function UserUmkm() {
         ? umkmPosts
         : umkmPosts.filter((post) => post.kategori.includes(filterCategory));
 
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = filteredUmkmPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
-        <>
-            <h1>User UMKM Posts</h1>
+        <div className='container mx-auto py-8'>
+            <h1 className="text-3xl font-medium text-center mb-8">User UMKM Posts</h1>
 
-            {loading &&
-                <div>Loading...</div>
-            }
-            {error && <p>{error}</p>}
+            {loading && <div className="text-center">Loading...</div>}
+            {error && <p className="text-center text-red-500">{error}</p>}
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                {filteredUmkmPosts.map((post) => (
+            <div className='flex flex-row flex-wrap gap-4 justify-center px-3'>
+                {currentPosts.map((post) => (
                     <div key={post.id} className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <a href="#">
-                            <img className="object-cover w-full h-60 rounded-t-lg" src={`${post.image}`} alt="" />
+                        <a href={`/umkm/details/${post.id}`}>
+                            <img className="object-cover h-60 rounded-t-lg" src={`${post.image}`} alt="image" style={{ width: "400px" }} />
                         </a>
                         <div className="p-5">
                             {post.kategori.split(' ').map((kategori, index) => (
@@ -90,7 +99,14 @@ function UserUmkm() {
                     </div>
                 ))}
             </div>
-        </>
+
+            <BluePagination
+                className='bg-gray-50 w-full'
+                totalPages={Math.ceil(filteredUmkmPosts.length / postsPerPage)}
+                activePage={currentPage}
+                onPageChange={handlePageChange}
+            />
+        </div>
     );
 }
 

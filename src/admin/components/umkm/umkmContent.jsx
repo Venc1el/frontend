@@ -12,7 +12,7 @@ function UmkmContent() {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(15);
     const [umkmExists, setUmkmExists] = useState(false);
     const { level } = UseAuth();
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import {Icon} from "leaflet"
-import customIconImage from '../../../assets/icon.svg';
+import {Icon} from "leaflet";
+import mapsIcon from "../../../assets/google-maps.png"
 
 function AllMapData() {
     const [coordinates, setCoordinates] = useState([]);
@@ -21,7 +21,7 @@ function AllMapData() {
     }, []);
 
     const customIcon = new Icon({
-        iconUrl: customIconImage, // Use the imported icon image
+        iconUrl: mapsIcon,
         iconSize: [32, 32]
     });
 

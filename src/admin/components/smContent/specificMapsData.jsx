@@ -1,10 +1,10 @@
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import { Icon } from "leaflet";
-import customIconImage from '../../../assets/icon.svg';
 import fetchUserInfo from '../../../server/getUserId';
+import { Icon } from "leaflet";
+import mapsIcon from "../../../assets/google-maps.png"
 
 function SpecificMapData() {
     const [coordinates, setCoordinates] = useState([]);
@@ -27,12 +27,12 @@ function SpecificMapData() {
         };
 
         fetchData();
-    }, []); // Empty dependency array means this effect will run once after the initial render
-
+    }, []); 
+    
     const customIcon = new Icon({
-        iconUrl: customIconImage, // Use the imported icon image
+        iconUrl: mapsIcon, // Use the imported icon image
         iconSize: [32, 32]
-    });
+    });// Empty dependency array means this effect will run once after the initial render
 
     return (
         <div>

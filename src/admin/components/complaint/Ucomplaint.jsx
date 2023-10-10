@@ -7,7 +7,7 @@ function UcomplaintContent({ userId }) { // Accept userId as a prop
 	const [complaintExists, setComplaintExists] = useState(false);
 	const [complaints, setComplaints] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(5);
+	const [postsPerPage] = useState(15);
 
 	useEffect(() => {
 		axios.get(`https://delightful-tan-scallop.cyclic.cloud/complaints/user/${userId}`) // Use the userId from props

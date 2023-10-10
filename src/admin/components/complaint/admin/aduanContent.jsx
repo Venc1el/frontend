@@ -7,7 +7,7 @@ function AduanContent() {
 	const [complaintExists, setComplaintExists] = useState(false);
 	const [complaints, setComplaints] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(5);
+	const [postsPerPage] = useState(15);
 
 	useEffect(() => {
 		axios

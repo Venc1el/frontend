@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './users/components/login/login';
 import Dashboard from './users/components/main/dashboard';
 import DashboardAdmin from './admin/components/mainContent/dashboardAdmin';
@@ -24,6 +24,7 @@ import DashboardSyscon from './admin/components/mainContent/dashboardSyscon';
 import DetailsUmkm from './users/components/umkm/detailsPublicUmkm';
 import UserUmkm from './users/components/umkm/umkmPublic';
 import Header from './users/components/header/header';
+import Footer from './users/components/footer/footer';
 
 function App() {
   // Constants
@@ -142,10 +143,10 @@ function App() {
         ) : (
           <Route path="*" element={<NotFoundPage />} />
         )}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element= {<> <Dashboard /> <Footer /> </>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/umkm" element={<><Header /><UserUmkm /></>} />
-        <Route path="/umkm/details/:postId" element={<><Header /><DetailsUmkm /></>} />
+        <Route path="/umkm" element={<><Header /><UserUmkm /> <Footer /></>} />
+        <Route path="/umkm/details/:postId" element={<><Header /><DetailsUmkm /> <Footer /></>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer />
