@@ -9,7 +9,7 @@ function AduanContent() {
 	const [complaints, setComplaints] = useState([]);
 	const [responses, setResponses] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(15);
+	const [postsPerPage, setPostsPerPage] = useState(15);
 
 	useEffect(() => {
 		axios
@@ -22,13 +22,13 @@ function AduanContent() {
 				console.error('Error fetching complaints:', error);
 			});
 
-			axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses')
-            .then(response => {
-                setResponses(response.data.responses);
-            })
-            .catch(error => {
-                console.error('Error fetching complaint responses:', error);
-            });
+		axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses')
+			.then(response => {
+				setResponses(response.data.responses);
+			})
+			.catch(error => {
+				console.error('Error fetching complaint responses:', error);
+			});
 	}, []);
 
 	const getCurrentPosts = () => {
@@ -41,38 +41,58 @@ function AduanContent() {
 		setCurrentPage(pageNumber);
 	};
 
+	const handlePostsPerPageChange = (e) => {
+		const value = parseInt(e.target.value, 10); // Parse the input value as an integer
+		setPostsPerPage(value);
+		setCurrentPage(1); // Reset current page when posts per page changes
+	};
+
 	const exportToExcel = () => {
-        const workbook = XLSX.utils.book_new();
+		const workbook = XLSX.utils.book_new();
 
-        // Convert complaints and responses to Excel sheets
-        const complaintsSheet = XLSX.utils.json_to_sheet(complaints);
-        const responsesSheet = XLSX.utils.json_to_sheet(responses);
+		// Convert complaints and responses to Excel sheets
+		const complaintsSheet = XLSX.utils.json_to_sheet(complaints);
+		const responsesSheet = XLSX.utils.json_to_sheet(responses);
 
-        // Add sheets to the workbook
-        XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
-        XLSX.utils.book_append_sheet(workbook, responsesSheet, 'ComplaintResponses');
+		// Add sheets to the workbook
+		XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
+		XLSX.utils.book_append_sheet(workbook, responsesSheet, 'ComplaintResponses');
 
-        // Export the workbook to Excel file
-        XLSX.writeFile(workbook, 'complaints_and_responses.xlsx');
-    };
+		// Export the workbook to Excel file
+		XLSX.writeFile(workbook, 'complaints_and_responses.xlsx');
+	};
 
 
 	return (
 		<div className='p-4 sm:ml-64'>
 			{complaintExists ? (
 				<div className='mt-20'>
-					<Link
-						className=' text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
-						to='/syscon/aduan/form-aduan'
-					>
-						Ajukan Pengaduan
-					</Link>
-					<button
-						className='bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded'
-						onClick={exportToExcel}
-					>
-						Export to Excel
-					</button>
+					<div className='flex justify-between items-center mb-4'>
+						<div>
+							<Link
+								className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+								to='/syscon/aduan/form-aduan'
+							>
+								Ajukan Pengaduan
+							</Link>
+							<button
+								className='bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded'
+								onClick={exportToExcel}
+							>
+								Export to Excel
+							</button>
+						</div>
+						<div className='flex items-center'>
+							<label className='mr-2'>Posts per Page:</label>
+							<input
+								type='number'
+								min='1'
+								value={postsPerPage}
+								onChange={handlePostsPerPageChange}
+								className='border border-gray-300 rounded px-2 py-1'
+							/>
+						</div>
+					</div>
 					<div className='relative overflow-x-auto shadow-sm sm:rounded-lg mt-9'>
 						<table className='w-full text-sm text-left text-gray-500 '>
 							<thead className='text-sm text-gray-800 uppercase bg-gray-200'>
