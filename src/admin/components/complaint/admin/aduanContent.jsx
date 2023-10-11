@@ -39,7 +39,7 @@ function AduanContent() {
 			const complaintsData = complaintsResponse.data;
 
 			// Fetch data for complaint_responses
-			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses');
+			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints/responses');
 			const responsesData = responsesResponse.data;
 
 			// Create a new workbook
