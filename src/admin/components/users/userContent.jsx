@@ -438,7 +438,7 @@ function UserContent() {
       </div>
 
       <Pagination
-        className="bg-gray-50 w-full"
+        className="bg-gray-50"
         totalPages={Math.ceil(users.length / postsPerPage)}
         activePage={currentPage}
         onPageChange={handlePageChange}

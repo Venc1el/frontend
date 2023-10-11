@@ -205,7 +205,7 @@ function UmkmContent() {
                         {error && <p className="text-red-500 mb-4">{error}</p>}
                     </div>
                     <Pagination
-                        className="bg-gray-50 w-full"
+                        className="bg-gray-50"
                         totalPages={Math.ceil(posts.length / postsPerPage)}
                         activePage={currentPage}
                         onPageChange={handlePageChange}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Pagination } from '../../../../pagination/pagination';
+import XLSX from 'xlsx';
 
 function AduanContent() {
 	const [complaintExists, setComplaintExists] = useState(false);
@@ -31,6 +32,28 @@ function AduanContent() {
 		setCurrentPage(pageNumber);
 	};
 
+	const exportToExcel = async () => {
+		try {
+			// Fetch data from the API
+			const response = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
+
+			// Extract data from the response
+			const complaintsData = response.data;
+
+			// Create a new workbook
+			const workbook = XLSX.utils.book_new();
+
+			// Add data to the workbook
+			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsData);
+			XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
+
+			// Export the workbook to Excel file
+			XLSX.writeFile(workbook, 'complaints.xlsx');
+		} catch (error) {
+			console.error('Error exporting to Excel:', error);
+		}
+	};
+
 	return (
 		<div className='p-4 sm:ml-64'>
 			{complaintExists ? (
@@ -41,6 +64,12 @@ function AduanContent() {
 					>
 						Ajukan Pengaduan
 					</Link>
+					<button
+						className='bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded'
+						onClick={exportToExcel}
+					>
+						Export to Excel
+					</button>
 					<div className='relative overflow-x-auto shadow-sm sm:rounded-lg mt-9'>
 						<table className='w-full text-sm text-left text-gray-500 '>
 							<thead className='text-sm text-gray-800 uppercase bg-gray-200'>
@@ -126,7 +155,7 @@ function AduanContent() {
 				</div>
 			)}
 			<Pagination
-				className='bg-gray-50 w-full'
+				className='bg-gray-50'
 				totalPages={Math.ceil(complaints.length / postsPerPage)} // Calculate total pages
 				activePage={currentPage}
 				onPageChange={handlePageChange}

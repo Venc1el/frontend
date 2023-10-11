@@ -115,7 +115,7 @@ function UcomplaintContent({ userId }) { // Accept userId as a prop
 			)}
 
 			<Pagination 
-				className='bg-gray-50 w-full'
+				className='bg-gray-50'
 				totalPages={Math.ceil(complaints.length / postsPerPage)} // Calculate total pages
 				activePage={currentPage}
 				onPageChange={handlePageChange}
