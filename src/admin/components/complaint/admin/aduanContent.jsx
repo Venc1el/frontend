@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 function AduanContent() {
 	const [complaintExists, setComplaintExists] = useState(false);
 	const [complaints, setComplaints] = useState([]);
+	const [responses, setResponses] = useState([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [postsPerPage] = useState(15);
 
@@ -20,6 +21,14 @@ function AduanContent() {
 			.catch((error) => {
 				console.error('Error fetching complaints:', error);
 			});
+
+			axios.get('https://your-api-url/complaint_responses')
+            .then(response => {
+                setResponses(response.data.responses);
+            })
+            .catch(error => {
+                console.error('Error fetching complaint responses:', error);
+            });
 	}, []);
 
 	const getCurrentPosts = () => {
@@ -32,35 +41,20 @@ function AduanContent() {
 		setCurrentPage(pageNumber);
 	};
 
-	const exportToExcel = async () => {
-		try {
-			// Fetch all complaints
-			const complaintsResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
-			const complaintsData = complaintsResponse.data;
-	
-			// Fetch all complaint responses
-			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses');
-			const responsesData = responsesResponse.data;
-	
-			// Extract the responses and merge them with complaints
-			const flattenedComplaintsData = complaintsData.map(complaint => {
-				const matchingResponses = responsesData.filter(response => response.idcomplaint === complaint.idcomplaint);
-				return { ...complaint, responses: matchingResponses };
-			});
-	
-			// Prepare data for Excel
-			const workbook = XLSX.utils.book_new();
-			const complaintsSheet = XLSX.utils.json_to_sheet(flattenedComplaintsData);
-	
-			// Append sheets to the workbook
-			XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
-	
-			// Export the workbook to Excel file
-			XLSX.writeFile(workbook, 'complaints_and_responses.xlsx');
-		} catch (error) {
-			console.error('Error exporting to Excel:', error);
-		}
-	};	
+	const exportToExcel = () => {
+        const workbook = XLSX.utils.book_new();
+
+        // Convert complaints and responses to Excel sheets
+        const complaintsSheet = XLSX.utils.json_to_sheet(complaints);
+        const responsesSheet = XLSX.utils.json_to_sheet(responses);
+
+        // Add sheets to the workbook
+        XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
+        XLSX.utils.book_append_sheet(workbook, responsesSheet, 'ComplaintResponses');
+
+        // Export the workbook to Excel file
+        XLSX.writeFile(workbook, 'complaints_and_responses.xlsx');
+    };
 
 
 	return (
