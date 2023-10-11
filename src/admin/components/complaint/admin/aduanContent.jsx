@@ -42,9 +42,13 @@ function AduanContent() {
 	};
 
 	const handlePostsPerPageChange = (e) => {
-		const value = parseInt(e.target.value, 10); // Parse the input value as an integer
+		let value = parseInt(e.target.value, 10);
+		// Limit posts per page to 250
+		if (value > 250) {
+			value = 250;
+		}
 		setPostsPerPage(value);
-		setCurrentPage(1); // Reset current page when posts per page changes
+		setCurrentPage(1);
 	};
 
 	const exportToExcel = () => {

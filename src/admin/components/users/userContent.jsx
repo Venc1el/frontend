@@ -10,7 +10,7 @@ function UserContent() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(20);
+  const [postsPerPage, setPostsPerPage] = useState(20);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
@@ -69,13 +69,13 @@ function UserContent() {
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
-            // Username already exists, show an alert
-            window.alert('Username already exists. Please choose a different username.');
-          } else {
-            // Other errors, log the error or show a generic error message
-            console.error('Error updating user:', error);
-            window.alert('Error updaating user. Please try again later.');
-          }
+          // Username already exists, show an alert
+          window.alert('Username already exists. Please choose a different username.');
+        } else {
+          // Other errors, log the error or show a generic error message
+          console.error('Error updating user:', error);
+          window.alert('Error updaating user. Please try again later.');
+        }
       });
   };
 
@@ -156,11 +156,33 @@ function UserContent() {
     setCurrentPage(pageNumber);
   };
 
+  const handlePostsPerPageChange = (e) => {
+    let value = parseInt(e.target.value, 10);
+    // Limit posts per page to 250
+    if (value > 250) {
+      value = 250;
+    }
+    setPostsPerPage(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="p-1 sm:ml-64">
       <div className="sm:p-4 rounded-lg dark:border-gray-700 mt-20">
-        <AddUsers onAddUser={handleAddUser} />
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+          <AddUsers onAddUser={handleAddUser} />
+          
+          <div className='flex items-center'>
+            <label className='mr-2'>Posts per Page:</label>
+            <input
+              type='number'
+              min='1'
+              value={postsPerPage}
+              onChange={handlePostsPerPageChange}
+              className='border border-gray-300 rounded px-2 py-1 w-16 text-center'
+            />
+          </div>
+        </div>
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

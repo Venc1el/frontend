@@ -12,7 +12,7 @@ function UmkmContent() {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(15);
+    const [postsPerPage, setPostsPerPage] = useState(15);
     const [umkmExists, setUmkmExists] = useState(false);
     const { level } = UseAuth();
 
@@ -90,16 +90,39 @@ function UmkmContent() {
         setCurrentPage(pageNumber);
     };
 
+    const handlePostsPerPageChange = (e) => {
+		let value = parseInt(e.target.value, 10);
+		// Limit posts per page to 250
+		if (value > 250) {
+			value = 250;
+		}
+		setPostsPerPage(value);
+		setCurrentPage(1);
+	};
+
     return (
         <div className='sm:ml-64 mt-20 p-4'>
             {umkmExists ? (
                 <>
-                    <Link
-                        className=' text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
-                        to='/syscon/umkm/umkm-form'
-                    >
-                        Posts UMKM
-                    </Link>
+                    <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
+                        <Link
+                            className=' text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                            to='/syscon/umkm/umkm-form'
+                        >
+                            Posts UMKM
+                        </Link>
+                        <div className='flex items-center'>
+                            <label className='mr-2'>Posts per Page:</label>
+                            <input
+                                type='number'
+                                min='1'
+                                value={postsPerPage}
+                                onChange={handlePostsPerPageChange}
+                                className='border border-gray-300 rounded px-2 py-1 w-16 text-center'
+                            />
+                        </div>
+                    </div>
+
                     <div className="relative overflow-x-auto shadow-sm sm:rounded-lg mt-8">
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead className="text-sm text-gray-800 uppercase bg-gray-200">
