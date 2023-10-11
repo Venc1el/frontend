@@ -34,21 +34,27 @@ function AduanContent() {
 
 	const exportToExcel = async () => {
 		try {
-			// Fetch data from the API
-			const response = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
+			// Fetch data for complaints
+			const complaintsResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
+			const complaintsData = complaintsResponse.data;
 
-			// Extract data from the response
-			const complaintsData = response.data;
+			// Fetch data for complaint_responses
+			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses');
+			const responsesData = responsesResponse.data;
 
 			// Create a new workbook
 			const workbook = XLSX.utils.book_new();
 
-			// Add data to the workbook
+			// Add complaints data to the workbook
 			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsData);
 			XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
 
+			// Add complaint_responses data to the workbook
+			const responsesSheet = XLSX.utils.json_to_sheet(responsesData);
+			XLSX.utils.book_append_sheet(workbook, responsesSheet, 'ComplaintResponses');
+
 			// Export the workbook to Excel file
-			XLSX.writeFile(workbook, 'complaints.xlsx');
+			XLSX.writeFile(workbook, 'complaints_and_responses.xlsx');
 		} catch (error) {
 			console.error('Error exporting to Excel:', error);
 		}
