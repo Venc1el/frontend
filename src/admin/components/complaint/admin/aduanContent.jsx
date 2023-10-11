@@ -22,7 +22,7 @@ function AduanContent() {
 				console.error('Error fetching complaints:', error);
 			});
 
-			axios.get('https://your-api-url/complaint_responses')
+			axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses')
             .then(response => {
                 setResponses(response.data.responses);
             })
