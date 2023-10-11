@@ -38,16 +38,14 @@ function AduanContent() {
 			const complaintsResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
 			const complaintsData = complaintsResponse.data;
 
-			// Fetch responses for complaints that have responses
-			const complaintsWithResponses = complaintsData.filter(complaint => complaint.hasResponse);
-			const responsesData = await Promise.all(complaintsWithResponses.map(complaint => {
-				return axios.get(`https://delightful-tan-scallop.cyclic.cloud/complaints/${complaint.id}/responses`);
-			}));
+			// Fetch all complaint responses
+			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaint_responses');
+			const responsesData = responsesResponse.data;
 
 			// Prepare data for Excel
 			const workbook = XLSX.utils.book_new();
-			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsWithResponses);
-			const responsesSheet = XLSX.utils.json_to_sheet(responsesData.map(response => response.data));
+			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsData);
+			const responsesSheet = XLSX.utils.json_to_sheet(responsesData);
 
 			// Append sheets to the workbook
 			XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
@@ -59,6 +57,7 @@ function AduanContent() {
 			console.error('Error exporting to Excel:', error);
 		}
 	};
+
 
 
 	return (
