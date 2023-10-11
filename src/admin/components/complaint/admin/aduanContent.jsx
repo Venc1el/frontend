@@ -34,23 +34,23 @@ function AduanContent() {
 
 	const exportToExcel = async () => {
 		try {
-			// Fetch data for complaints
+			// Fetch all complaints
 			const complaintsResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints');
 			const complaintsData = complaintsResponse.data;
 
-			// Fetch data for complaint_responses
-			const responsesResponse = await axios.get('https://delightful-tan-scallop.cyclic.cloud/complaints/responses');
-			const responsesData = responsesResponse.data;
+			// Fetch responses for complaints that have responses
+			const complaintsWithResponses = complaintsData.filter(complaint => complaint.hasResponse);
+			const responsesData = await Promise.all(complaintsWithResponses.map(complaint => {
+				return axios.get(`https://delightful-tan-scallop.cyclic.cloud/complaints/${complaint.id}/responses`);
+			}));
 
-			// Create a new workbook
+			// Prepare data for Excel
 			const workbook = XLSX.utils.book_new();
+			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsWithResponses);
+			const responsesSheet = XLSX.utils.json_to_sheet(responsesData.map(response => response.data));
 
-			// Add complaints data to the workbook
-			const complaintsSheet = XLSX.utils.json_to_sheet(complaintsData);
+			// Append sheets to the workbook
 			XLSX.utils.book_append_sheet(workbook, complaintsSheet, 'Complaints');
-
-			// Add complaint_responses data to the workbook
-			const responsesSheet = XLSX.utils.json_to_sheet(responsesData);
 			XLSX.utils.book_append_sheet(workbook, responsesSheet, 'ComplaintResponses');
 
 			// Export the workbook to Excel file
@@ -59,6 +59,7 @@ function AduanContent() {
 			console.error('Error exporting to Excel:', error);
 		}
 	};
+
 
 	return (
 		<div className='p-4 sm:ml-64'>
