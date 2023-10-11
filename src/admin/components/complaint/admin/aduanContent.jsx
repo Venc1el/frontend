@@ -67,8 +67,8 @@ function AduanContent() {
 		<div className='p-4 sm:ml-64'>
 			{complaintExists ? (
 				<div className='mt-20'>
-					<div className='flex justify-between items-center mb-4'>
-						<div>
+					<div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
+						<div className='mb-2 sm:mb-0'>
 							<Link
 								className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
 								to='/syscon/aduan/form-aduan'
@@ -76,7 +76,7 @@ function AduanContent() {
 								Ajukan Pengaduan
 							</Link>
 							<button
-								className='bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded'
+								className='bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded mt-2 sm:mt-0'
 								onClick={exportToExcel}
 							>
 								Export to Excel
@@ -89,7 +89,7 @@ function AduanContent() {
 								min='1'
 								value={postsPerPage}
 								onChange={handlePostsPerPageChange}
-								className='border border-gray-300 rounded px-2 py-1'
+								className='border border-gray-300 rounded px-2 py-1 w-16 text-center'
 							/>
 						</div>
 					</div>
