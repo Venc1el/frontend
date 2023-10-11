@@ -111,7 +111,7 @@ function UmkmContent() {
                         >
                             Posts UMKM
                         </Link>
-                        <div className='flex items-center'>
+                        <div className='flex items-center sm:mt-3'>
                             <label className='mr-2'>Posts per Page:</label>
                             <input
                                 type='number'

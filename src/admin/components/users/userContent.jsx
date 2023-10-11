@@ -171,8 +171,8 @@ function UserContent() {
       <div className="sm:p-4 rounded-lg dark:border-gray-700 mt-20">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
           <AddUsers onAddUser={handleAddUser} />
-          
-          <div className='flex items-center'>
+
+          <div className='flex items-center sm:mt-3'>
             <label className='mr-2'>Posts per Page:</label>
             <input
               type='number'
